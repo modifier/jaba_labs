@@ -32,6 +32,14 @@ $(document).ready(function () {
 		}
 	}).enable();
 
+	$('input[type=checkbox] + label').on('click', function (evt) {
+		$target = $(evt.target);
+
+		var $checkbox = $target.siblings('input[type=checkbox]');
+		var isChecked = $checkbox.prop('checked');
+		$checkbox.prop('checked', !isChecked);
+	});
+
 	$('input[type=submit]').on('click', function (evt) {
 		var validX = XValidator.validate();
 		var validY = XValidator.validate();
