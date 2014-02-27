@@ -41,9 +41,9 @@ TextValidator.prototype = {
 	getMessage: function () {
 		var index = this.validate();
 
-		for (var i in this.status) {
-			if (index == this.status[i]) {
-				var key = i;
+		for (var key in this.status) {
+			if (index == this.status[key]) {
+				break
 			}
 		}
 

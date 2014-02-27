@@ -1,13 +1,8 @@
 $(document).ready(function () {
-	var statuses = {
-		position_x: false,
-		position_y: false
-	};
-
 	var problems = new ProblemLine($('#errors'));
 
 	var XValidator = new CheckboxValidator({
-		$fields: $('#position_x input[type=checkbox]'),
+		$fields: $('#position_x').find('input[type=checkbox]'),
 		message: {
 			NoneChecked: 'Please check at least one checkbox.'
 		},

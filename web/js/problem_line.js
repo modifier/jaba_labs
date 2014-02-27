@@ -25,7 +25,7 @@ ProblemLine.prototype = {
 			}
 		}
 
-		this._show();
+		return this._show();
 	},
 
 	addMessage: function (name, content) {
