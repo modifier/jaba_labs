@@ -6,43 +6,37 @@
     <title>Lab # 1 Programming Web Applications</title>
     <meta charset="utf-8" />
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone.js"></script>
+    <script src="/js/checkbox_validator.js"></script>
+    <script src="/js/text_validator.js"></script>
+    <script src="/js/problem_line.js"></script>
     <script src="/js/main.js"></script>
+    <link href="/css/style.css" rel="stylesheet" />
 </head>
 <body>
 <header>
-    <div class="full-name">Амирасланов Евгений Шакирович</div>
-    <div class="group">4125</div>
-    <div class="variant">495</div>
+    <h1>Лабораторная работа № 1 по программированию интернет-приложений</h1>
+    <div class="author">Амирасланов Евгений Шакирович, группа 4125, вариант 495</div>
 </header>
-<form action="/" method="get">
-    <div class="position_x">
+<div id="errors"></div>
+<form action="/" method="get" name="duck" id="duck_form">
+    <div class="form-line position_x">
         <div class="label">X position:</div>
-        <ul class="value">
-            <li><input type="checkbox" value="-2" name="position_x" /> -2</li>
-            <li><input type="checkbox" value="-1.5" name="position_x" /> -1.5</li>
-            <li><input type="checkbox" value="-1" name="position_x" /> -</li>
-            <li><input type="checkbox" value="-0.5" name="position_x" /> -0.5</li>
-            <li><input type="checkbox" value="-0" name="position_x" /> -0</li>
-            <li><input type="checkbox" value="0.5" name="position_x" /> 0.5</li>
-            <li><input type="checkbox" value="1" name="position_x" /> 1</li>
-            <li><input type="checkbox" value="1.5" name="position_x" /> 1.5</li>
-            <li><input type="checkbox" value="2" name="position_x" /> 2</li>
+        <ul class="value" id="position_x">
+            <% for(float i = -2; i <= 2; i += 0.5) { %>
+            <li><input type="checkbox" value="<%=i%>" name="position_x" /><label><%=i%></label></li>
+            <% } %>
         </ul>
     </div>
-    <div class="position_y">
+    <div class="form-line position_y">
         <div class="label">Y position: </div>
-        <div class="value"><input type="text" value="0" name="position_y" /></div>
+        <div class="value"><input type="text" value="0" name="position_y" id="position_y" /></div>
     </div>
-    <div class="radius">
+    <div class="form-line radius">
         <div class="label">Radius: </div>
         <ul class="value">
-            <input type="submit" value="1" name="radius" />
-            <input type="submit" value="1.5" name="radius" />
-            <input type="submit" value="2" name="radius" />
-            <input type="submit" value="2.5" name="radius" />
-            <input type="submit" value="3" name="radius" />
+            <% for(float i = 1; i <= 3; i += 0.5) { %>
+            <li><input type="submit" value="<%=i%>" name="radius" id="radius" /></li>
+            <% } %>
         </ul>
     </div>
 </form>
