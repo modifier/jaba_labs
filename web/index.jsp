@@ -18,7 +18,7 @@
     <div class="author">Амирасланов Евгений Шакирович, группа 4125, вариант 495</div>
 </header>
 <div id="errors"></div>
-<form action="${pageContext.request.contextPath}/handle" method="get" name="duck" id="duck_form">
+<form action="${pageContext.request.contextPath}/handle/" method="get" name="duck" id="duck_form">
     <div class="form-line position_x">
         <div class="label">X position:</div>
         <ul class="value" id="position_x">
@@ -32,6 +32,7 @@
         <div class="value"><input type="text" value="0" name="position_y" id="position_y" /></div>
     </div>
     <div class="form-line radius">
+        <input type="hidden" name="radius" id="radius_hidden" />
         <div class="label">Radius: </div>
         <ul class="value">
             <% for(float i = 1; i <= 3; i += 0.5) { %>
@@ -40,5 +41,6 @@
         </ul>
     </div>
 </form>
+<div id="result-wrapper"></div>
 </body>
 </html>

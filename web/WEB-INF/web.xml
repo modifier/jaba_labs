@@ -7,12 +7,12 @@
 
     <servlet>
         <servlet-name>MainServlet</servlet-name>
-        <servlet-class>MainServlet</servlet-class>
+        <servlet-class>dno1.MainServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>HandlerServlet</servlet-name>
-        <servlet-class>HandlerServlet</servlet-class>
+        <servlet-class>dno1.HandlerServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

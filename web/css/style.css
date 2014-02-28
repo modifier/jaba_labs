@@ -59,3 +59,12 @@ form ul li {
 form ul li input[type="submit"] {
     width: 50px;
 }
+
+#result-wrapper {
+    margin: 10px;
+}
+
+.result-table td {
+    padding: 5px 10px;
+    width: 50px;
+}
