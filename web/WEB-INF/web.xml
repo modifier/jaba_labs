@@ -10,8 +10,18 @@
         <servlet-class>MainServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>HandlerServlet</servlet-name>
+        <servlet-class>HandlerServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>MainServlet</servlet-name>
         <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>HandlerServlet</servlet-name>
+        <url-pattern>/handle</url-pattern>
     </servlet-mapping>
 </web-app>
