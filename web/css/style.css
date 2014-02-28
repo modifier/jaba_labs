@@ -67,4 +67,5 @@ form ul li input[type="submit"] {
 .result-table td {
     padding: 5px 10px;
     width: 50px;
+    text-align: center;
 }

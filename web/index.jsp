@@ -15,14 +15,14 @@
 <body>
 <header>
     <h1>Лабораторная работа № 1 по программированию интернет-приложений</h1>
-    <div class="author">Амирасланов Евгений Шакирович, группа 4125, вариант 495</div>
+    <div class="author">Амирасланов Евгений Шакирович, Кулатова Наталья Александровна, группа 4125, вариант 473</div>
 </header>
 <div id="errors"></div>
-<form action="${pageContext.request.contextPath}/handle/" method="get" name="duck" id="duck_form">
+<form action="${pageContext.request.contextPath}/handle" method="get" name="duck" id="duck_form">
     <div class="form-line position_x">
         <div class="label">X position:</div>
         <ul class="value" id="position_x">
-            <% for(float i = -2; i <= 2; i += 0.5) { %>
+            <% for(float i = -5; i <= 3; i += 1) { %>
             <li><input type="checkbox" value="<%=i%>" name="position_x" /><label for="position_x"><%=i%></label></li>
             <% } %>
         </ul>
@@ -32,13 +32,15 @@
         <div class="value"><input type="text" value="0" name="position_y" id="position_y" /></div>
     </div>
     <div class="form-line radius">
-        <input type="hidden" name="radius" id="radius_hidden" />
         <div class="label">Radius: </div>
         <ul class="value">
             <% for(float i = 1; i <= 3; i += 0.5) { %>
-            <li><input type="submit" value="<%=i%>" name="radius" id="radius" /></li>
+            <li><input type="radio" value="<%=i%>" name="radius" <%=(i == 1)? " checked" : "" %> /><label for="radius"><%=i%></label></li>
             <% } %>
         </ul>
+    </div>
+    <div class="form-line submit">
+        <input type="submit" value="Jeronimo!" name="submit" />
     </div>
 </form>
 <div id="result-wrapper"></div>
