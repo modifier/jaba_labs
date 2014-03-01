@@ -13,15 +13,15 @@ ProblemLine.prototype = {
 		}
 
 		if (1 == messagesCount) {
-			var container = this.$object;
+			var $container = this.$object;
 			for (var i in this._messages) {
-				container.html(this._messages[i]);
+				$container.html(this._messages[i]);
 			}
 		} else {
 			this.$object.empty();
-			var container = $('<ul>').appendTo(this.$object);
+			var $container = $('<ul>').appendTo(this.$object);
 			for (var i in this._messages) {
-				container.append($('<li>').html(this._messages[i]));
+				$container.append($('<li>').html(this._messages[i]));
 			}
 		}
 

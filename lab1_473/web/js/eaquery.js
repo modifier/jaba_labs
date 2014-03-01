@@ -8,7 +8,11 @@ var eaQuery = (function () {
 		} if (selector instanceof HTMLElement) {
 			return result.add(selector);
 		} else if (typeof selector == 'string') {
-			return eaQuery(document.body).find(selector);
+			if (/^<\w+>$/.test(selector)) {
+				return eaQuery(this.createElement(selector));
+			} else {
+				return eaQuery(document.body).find(selector);
+			}
 		}
 
 		return result;
@@ -71,6 +75,14 @@ var eaQuery = (function () {
 			return this.items.length;
 		},
 
+		createElement: function (tag) {
+			var res = tag.match(/^<(\w+)>$/);
+			if (res && res[1]) {
+				var element = document.createElement(res[1]);
+			}
+			return element;
+		},
+
 		get: function (index) {
 			return this.item[index];
 		},
@@ -95,12 +107,66 @@ var eaQuery = (function () {
 			return this;
 		},
 
-		children: function () {
-			var result = $();
-			for (var i = 0; i < this.items.length; i++) {
-				result.flatten(this.items[i].childNodes);
+		html: function (html) {
+			this.items[0].innerHTML = html;
+			return this;
+		},
+
+		append: function ($element) {
+			for (var i = 0, l = $element.length(); i < l; i++) {
+				this.items[0].appendChild($element.get(i));
 			}
-			return result;
+			return this;
+		},
+
+		appendTo: function ($element) {
+			$element.append(this);
+			return this;
+		},
+
+		remove: function () {
+			for (var i = 0; i < this.items.length; i++) {
+				this.items[i].remove();
+			}
+		},
+
+		empty: function () {
+			for (var i = 0; i < this.items.length; i++) {
+				$(this.items[i]).children().remove();
+			}
+
+			return this;
+		},
+
+		is: function (selector) {
+			return matchesSelector(this.items[0], selector);
+		},
+
+		children: function (selector) {
+			var $result = $();
+			for (var i = 0; i < this.items.length; i++) {
+				$result.flatten(this.items[i].childNodes);
+			}
+			return $result.filter(selector);
+		},
+
+		siblings: function (selector) {
+			var parent = this.items[0].parentNode;
+			var $result = $(parent).children(selector);
+		},
+
+		filter: function (selector) {
+			if (!selector) {
+				return this;
+			}
+
+			var $result = $();
+			for (var i = 0; i < this.items.length; i++) {
+				if (matchesSelector(this.items[i], selector)) {
+					$result.add(this.items[i]);
+				}
+			}
+			return $result;
 		},
 
 		find: function (selector) {
@@ -119,6 +185,7 @@ var eaQuery = (function () {
 				return $result;
 			}
 
+			// TODO: get rid of recursion if possible
 			for (var i = 0; i < children.length; i++) {
 				if (matchesSelector(children[i], selector)) {
 					$result.add(children[i]);
@@ -126,7 +193,93 @@ var eaQuery = (function () {
 				$result.eaFlatten(children[i].find(selector));
 			}
 			return $result;
+		},
+
+		attr: function (attributeName) {
+			return this.items[0].getAttribute(attributeName);
+		},
+
+		prop: function (propName, value) {
+			if (!value) {
+				return this.items[0][propName];
+			}
+
+			this.items[0][propName] = value;
+		},
+
+		on: function (eventName, callback) {
+			for (var i = 0; i < this.length(); i++) {
+				this.items[i].addEventListener(eventName, callback);
+			}
+		},
+
+		show: function () {
+			for (var i = 0; i < this.items.length; i++) {
+				this.items[i].style.display = '';
+			}
+			return this;
+		},
+
+		hide: function () {
+			for (var i = 0; i < this.items.length; i++) {
+				this.items[i].style.display = 'none';
+			}
+			return this;
 		}
 	};
+
+	eaQuery.Deferred = function () {
+		this.failCallbacks = [];
+		this.doneCallbacks = [];
+	};
+
+	eaQuery.Deferred.prototype = {
+		fail: function (callback) {
+			this.failCallbacks.push(callback);
+		},
+		reject: function () {
+			for (var i = 0; i < this.failCallbacks.length; i++) {
+				this.failCallbacks[i].apply(this, arguments);
+			}
+		},
+		done: function (callback) {
+			this.doneCallbacks.push(callback);
+		},
+		resolve: function () {
+			for (var i = 0; i < this.doneCallbacks.length; i++) {
+				this.doneCallbacks[i].apply(this, arguments);
+			}
+		}
+	};
+
+	eaQuery.ajax = function (options) {
+		var $dfd = new eaQuery.Deferred();
+
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+					$dfd.resolve(xhr.responseText);
+				} else {
+					$dfd.reject(xhr.statusText);
+				}
+			}
+		}
+		xhr.open(options.type || 'GET', options.url, true);
+		xhr.send(options.data || null);
+		
+		return $dfd;
+	};
+
+	eaQuery.proxy = function (foo, context) {
+		return function () {
+			foo.apply(context, arguments);
+		};
+	};
+
+	eaQuery.noop  = function () {
+
+	};
+
 	return eaQuery;
 })();
