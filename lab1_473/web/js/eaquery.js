@@ -1,4 +1,4 @@
-var eaQuery = (function () {
+var $ = (function () {
 	var eaQuery = function (selector) {
 		var result = { items: [] };
 		result.prototype = this.prototype;
@@ -32,6 +32,21 @@ var eaQuery = (function () {
 	};
 
 	var matchesSelector = function (node, selector) {
+		// In this project we use only + selector, so let's not bother.
+		var divisorSymbols = '+';
+		var parts = selector.split(divisorSymbols).map(function (o) {
+			return o.trim();
+		});
+
+		if (parts.length == 1) {
+			return matchesSingleSelector(node, selector);
+		}
+
+		// Moreover, it's commutative, that's wrong
+		return eaQuery(node).is(parts[0]) && eaQuery(node).siblings(parts[1]).length() != 0;
+	};
+
+	var matchesSingleSelector = function (node, selector) {
 		var tagRegex = /^([\d\w\-]+)/;
 		var idRegex = /#([\d\w\-_]+)/;
 		var classRegex = "\\.([\\d\\w\\-_]+)";
@@ -267,7 +282,7 @@ var eaQuery = (function () {
 		}
 		xhr.open(options.type || 'GET', options.url, true);
 		xhr.send(options.data || null);
-		
+
 		return $dfd;
 	};
 
