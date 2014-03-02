@@ -9,4 +9,10 @@
         <servlet-name>AreaServlet</servlet-name>
         <servlet-class>AreaServlet</servlet-class>
     </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>AreaServlet</servlet-name>
+        <url-pattern>/area</url-pattern>
+    </servlet-mapping>
 </web-app>
