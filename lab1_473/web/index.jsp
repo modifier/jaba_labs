@@ -5,7 +5,7 @@
 <head>
     <title>Lab # 1 Programming Web Applications</title>
     <meta charset="utf-8" />
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+    <script src="js/eaquery.js"></script>
     <script src="js/checkbox_validator.js"></script>
     <script src="js/text_validator.js"></script>
     <script src="js/problem_line.js"></script>

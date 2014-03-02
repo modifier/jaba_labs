@@ -10,6 +10,7 @@ header {
 	background: #e8f2ff;
     padding: 20px;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 header h1 {
@@ -24,6 +25,7 @@ header h1 {
     display: none;
     line-height: 1.2em;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 #errors ul {
