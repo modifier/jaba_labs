@@ -1,0 +1,45 @@
+<html>
+  <head>
+      <title>Лабораторная работа по программированию интернет-приложения</title>
+      <script src="/script.js"></script>
+      <link href="/style.css" rel="stylesheet" />
+      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  </head>
+  <body onload="start()">
+      <div class="header">Работу выполнили: <br/>Захарова Ася Александровна<br/>Сиразетдинова Гульнара Ринатовна<br/><br/>Группа 4125, вариант 450</div>
+      <form id="entire_form" method="get" action="">
+          <table>
+              <tr>
+                  <td>изменение X:</td>
+                  <td>
+                      <input type="radio" value="-3" name="coord_x" checked /> -3
+                      <input type="radio" value="-2" name="coord_x" /> -2
+                      <input type="radio" value="-1" name="coord_x" /> -1
+                      <input type="radio" value="0" name="coord_x" /> 0
+                      <input type="radio" value="1" name="coord_x" /> 1
+                      <input type="radio" value="2" name="coord_x" /> 2
+                      <input type="radio" value="3" name="coord_x" /> 3
+                      <input type="radio" value="4" name="coord_x" /> 4
+                      <input type="radio" value="5" name="coord_x" /> 5
+                  </td>
+              </tr>
+              <tr>
+                  <td>изменение Y:</td>
+                  <td>
+                      <input type="text" value="0" name="coord_y" id="coord_y" />
+                  </td>
+              </tr>
+              <tr>
+                  <td>изменение R:</td>
+                  <td>
+                      <input type="submit" value="1" name="radius" class="radius_button" />
+                      <input type="submit" value="2" name="radius" class="radius_button" />
+                      <input type="submit" value="3" name="radius" class="radius_button" />
+                      <input type="submit" value="4" name="radius" class="radius_button" />
+                      <input type="submit" value="5" name="radius" class="radius_button" />
+                  </td>
+              </tr>
+          </table>
+      </form>
+  </body>
+</html>
