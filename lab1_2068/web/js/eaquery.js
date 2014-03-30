@@ -415,6 +415,20 @@ var $ = (function () {
 		return $dfd;
 	};
 
+	eaQuery.jsonp = function (options) {
+		var urlParams = options.data ? options.data : [];
+		if (options.action) {
+			urlParams['action'] = options.action;
+		}
+
+		var formedUrl = options.url + '?' + formUrl(urlParams);
+
+		var script = document.createElement('script');
+		script.src = formedUrl;
+
+		document.body.appendChild(script);
+	}
+
 	eaQuery.proxy = function (foo, context) {
 		return function () {
 			foo.apply(context, arguments);

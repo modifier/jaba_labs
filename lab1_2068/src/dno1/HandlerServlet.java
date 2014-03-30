@@ -17,22 +17,18 @@ public class HandlerServlet extends HttpServlet
 {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		String[] PositionX = request.getParameterValues("position_x");
+		String PositionX = request.getParameter("position_x");
 		String PositionY = request.getParameter("position_y");
 		String Radius = request.getParameter("radius");
+		String Action = request.getParameter("action");
 
-		float y, r;
-		float[] x;
+		float y, r, x;
 
 		try
 		{
 			y = Float.valueOf(PositionY);
 			r = Float.valueOf(Radius);
-
-			x = new float[PositionX.length];
-			for (int i = 0; i < PositionX.length; i++) {
-				x[i] = Float.valueOf(PositionX[i]);
-			}
+			x = Float.valueOf(PositionX);
 
 			if (r < 0) {
 				throw new Exception();
@@ -45,25 +41,9 @@ public class HandlerServlet extends HttpServlet
 			return;
 		}
 
-		request.setAttribute("table", prepareArray(x, y, r));
+		request.setAttribute("result", Boolean.toString(checkPoint(x, y, r)));
+		request.setAttribute("action", Action);
 		request.getRequestDispatcher("/handle.jsp").forward(request, response);
-	}
-
-	private List<Map<String, String>> prepareArray(float[] x, float y, float r)
-	{
-		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-		for (float aX : x)
-		{
-			Map<String, String> obj = new HashMap<String, String>();
-			obj.put("x", Float.toString(aX));
-			obj.put("y", Float.toString(y));
-			obj.put("r", Float.toString(r));
-			obj.put("hit", Boolean.toString(checkPoint(aX, y, r)));
-
-			result.add(obj);
-		}
-
-		return result;
 	}
 
 	private boolean checkPoint(float x, float y, float r)
