@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lab # 1 Programming Web Applications</title>
+    <title>Lab # 2 Programming Web Applications</title>
     <meta charset="utf-8" />
     <script src="js/eaquery.js"></script>
     <script src="js/checkbox_validator.js"></script>
@@ -14,16 +14,16 @@
 </head>
 <body>
 <header>
-    <h1>Лабораторная работа № 1 по программированию интернет-приложений</h1>
-    <div class="author">Амирасланов Евгений Шакирович, Кулатова Наталья Александровна, группа 4125, вариант 473</div>
+    <h1>Лабораторная работа № 2 по программированию интернет-приложений</h1>
+    <div class="author">Амирасланов Евгений Шакирович, Кулатова Наталья Александровна, группа 4125, вариант 2068</div>
 </header>
 <div id="errors"></div>
-<form action="${pageContext.request.contextPath}/handle" method="get" name="duck" id="duck_form">
+<form action="${pageContext.request.contextPath}/handle" method="post" name="duck" id="duck_form">
     <div class="form-line position_x">
         <div class="label">X position:</div>
         <ul class="value" id="position_x">
-            <% for(float i = -5; i <= 3; i += 1) { %>
-            <li><input type="checkbox" value="<%=i%>" name="position_x" /><label for="position_x"><%=i%></label></li>
+            <% for(float i = -2; i <= 2; i += 0.5) { %>
+            <li><input type="submit" value="<%=i%>" name="position_x" /></li>
             <% } %>
         </ul>
     </div>
@@ -33,14 +33,11 @@
     </div>
     <div class="form-line radius">
         <div class="label">Radius: </div>
-        <ul class="value">
+        <select name="radius" class="value">
             <% for(float i = 1; i <= 3; i += 0.5) { %>
-            <li><input type="radio" value="<%=i%>" name="radius" <%=(i == 1)? " checked" : "" %> /><label for="radius"><%=i%></label></li>
+            <option value="<%=i%>"><%=i%></option>
             <% } %>
-        </ul>
-    </div>
-    <div class="form-line submit">
-        <input type="submit" value="Jeronimo!" name="submit" />
+        </select>
     </div>
 </form>
 <div id="result-wrapper"></div>

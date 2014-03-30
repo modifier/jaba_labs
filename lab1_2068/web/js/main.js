@@ -3,19 +3,10 @@ var execute = function ($form, $log, $result) {
 
 	var url = $form.attr('action');
 
-	var XValidator = new CheckboxValidator({
-		$fields: $form.find('#position_x').find('input[type=checkbox]'),
-		message: {
-			NoneChecked: 'Please check at least one checkbox.'
-		},
-		onValid: function () {
-			problems.removeMessage('position_x');
-			problems.removeMessage('radius');
-		}
-	}).enable();
+	var $xValidation = $form.find('#position_y');
 
 	var YValidator = new TextValidator({
-		$field: $form.find('#position_y'),
+		$field: $xValidation,
 		min: -5,
 		max: 3,
 		message: {
@@ -28,6 +19,17 @@ var execute = function ($form, $log, $result) {
 			problems.removeMessage('radius');
 		}
 	}).enable();
+
+	var $submits = $('#position_x').find('input');
+
+	function checkValidation () {
+		var isValid = YValidator.validate() == YValidator.status.EverythingOK;
+
+		$submits.prop('disabled', !isValid);
+	}
+
+	$xValidation.on('change', checkValidation);
+
 
 	$form.find('input + label').on('click', function (evt) {
 		$target = $(evt.target);
@@ -43,13 +45,11 @@ var execute = function ($form, $log, $result) {
 	});
 
 	$form.find('input[type=submit]').on('click', function (evt) {
-		var validX = XValidator.validate();
 		var validY = YValidator.validate();
 
 		evt.preventDefault();
 
-		if (validX != XValidator.status.EverythingOK || validY != YValidator.status.EverythingOK) {
-			problems.addMessage('position_x', XValidator.getMessage());
+		if (validY != YValidator.status.EverythingOK) {
 			problems.addMessage('position_y', YValidator.getMessage());
 			problems.addMessage('radius', 'Resolve problems above first.');
 			return;

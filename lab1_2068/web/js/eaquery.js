@@ -141,6 +141,12 @@ var $ = (function () {
 			return this;
 		},
 
+		each: function (callback) {
+			for (var i = 0; i < this.length; i++) {
+				callback.call(this, eaQuery(this.get(i)));
+			}
+		},
+
 		eaFlatten: function ($elements) {
 			this.flatten($elements.items);
 		},
@@ -249,13 +255,37 @@ var $ = (function () {
 			return $result;
 		},
 
-		attr: function (attributeName) {
-			return this.items[0].getAttribute(attributeName);
+		attr: function (attributeName, value) {
+			if (typeof value == 'undefined') {
+				return this.items[0].getAttribute(attributeName);
+			}
+
+			if (this.length > 1) {
+				this.each(function ($el) {
+					$el.attr(attributeName, value);
+				});
+				return;
+			}
+
+			var oldValue = this.items[0].getAttribute(attributeName);
+			this.items[0].setAttribute(attributeName, value);
+
+			if (oldValue != value) {
+				var event = new Event('change');
+				this.items[0].dispatchEvent(event);
+			}
 		},
 
 		prop: function (propName, value) {
 			if (typeof value == 'undefined') {
 				return this.items[0][propName];
+			}
+
+			if (this.length > 1) {
+				this.each(function ($el) {
+					$el.prop(propName, value);
+				});
+				return;
 			}
 
 			var oldValue = this.items[0][propName];

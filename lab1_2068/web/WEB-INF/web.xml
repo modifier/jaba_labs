@@ -6,19 +6,9 @@
            version="2.5">
 
     <servlet>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>dno1.MainServlet</servlet-class>
-    </servlet>
-
-    <servlet>
         <servlet-name>HandlerServlet</servlet-name>
         <servlet-class>dno1.HandlerServlet</servlet-class>
     </servlet>
-
-    <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/index</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>HandlerServlet</servlet-name>
