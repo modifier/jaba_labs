@@ -1,3 +1,13 @@
+var convertPoint = function (evt) {
+	var offsets = [evt.offsetX, evt.offsetY];
+	var center = 250;
+	var radius = 200;
+	return [
+		(offsets[0] - center) / radius,
+		-(offsets[1] - center) / radius
+	];
+}
+
 var initializeTabulate = function () {
 	window.tabulate = (function ($wrapper) {
 		var $tbody = $wrapper.find('tbody');
@@ -27,7 +37,7 @@ var initializeTabulate = function () {
 	})($('#result-wrapper'));
 };
 
-var execute = function ($form, $log, $result) {
+var execute = function ($form, $log, $svg) {
 	var problems = new ProblemLine($log);
 
 	var url = $form.attr('action');
@@ -59,6 +69,23 @@ var execute = function ($form, $log, $result) {
 
 	$xValidation.on('change', checkValidation);
 
+	$svg.on('click', function (evt) {
+		var offsets = convertPoint(evt);
+
+		var radius = $form.find('[name=radius]').val();
+
+		var data = {
+			position_x: offsets[0] * radius,
+			position_y: offsets[1] * radius,
+			radius: radius
+		};
+
+		$.jsonp({
+			url: url,
+			data: data,
+			action: 'tabulate'
+		});
+	});
 
 	$form.find('input + label').on('click', function (evt) {
 		$target = $(evt.target);
@@ -96,6 +123,6 @@ var execute = function ($form, $log, $result) {
 };
 
 $(document).ready(function () {
-	execute($('#duck_form'), $('#errors'), $('#result-wrapper'));
+	execute($('#duck_form'), $('#errors'), $('#svg_map'));
 	initializeTabulate();
 });

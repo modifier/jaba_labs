@@ -30,7 +30,8 @@ public class HandlerServlet extends HttpServlet
 			r = Float.valueOf(Radius);
 			x = Float.valueOf(PositionX);
 
-			if (r < 0) {
+			if (r < 0)
+			{
 				throw new Exception();
 			}
 		}
@@ -51,16 +52,19 @@ public class HandlerServlet extends HttpServlet
 
 	private boolean checkPoint(float x, float y, float r)
 	{
-		if (x >= 0 && y >= 0) {
-			return x + y <= r;
-		}
-
-		if (x < 0 && y >= 0) {
+		if (x >= 0 && y >= 0)
+		{
 			return x*x + y*y <= r*r;
 		}
 
-		if (x > 0 && y < 0) {
-			return x <= r / 2 && y >= -r;
+		if (x < 0 && y >= 0)
+		{
+			return x > -r / 2 && y < r;
+		}
+
+		if (x < 0 && y < 0)
+		{
+			return - y / 2 - x < r / 2;
 		}
 
 		return false;

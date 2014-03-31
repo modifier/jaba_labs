@@ -36,7 +36,7 @@ var $ = (function () {
 	};
 
 	var matchesSingleSelector = function (node, selector) {
-		if (!(node instanceof HTMLElement)) {
+		if (!(node instanceof HTMLElement) && !(node instanceof SVGElement)) {
 			return false;
 		}
 
@@ -108,7 +108,7 @@ var $ = (function () {
 				};
 			} if (selector instanceof Array) {
 				return this.flatten(selector);
-			} if (selector instanceof HTMLElement) {
+			} if ((selector instanceof HTMLElement) ||  (selector instanceof SVGElement)) {
 				return this.add(selector);
 			} else if (typeof selector == 'string') {
 				if (/^<\w+>$/.test(selector)) {
@@ -132,7 +132,7 @@ var $ = (function () {
 		},
 
 		add: function (DOMElement) {
-			if (!(DOMElement instanceof HTMLElement)) {
+			if (!(DOMElement instanceof HTMLElement) && !(DOMElement instanceof SVGElement)) {
 				return;
 			}
 
@@ -254,7 +254,7 @@ var $ = (function () {
 				if (matchesSelector(children[i], selector)) {
 					$result.add(children[i]);
 				}
-				if (!(children[i] instanceof HTMLElement)) {
+				if (!(children[i] instanceof HTMLElement) && !(children[i] instanceof SVGElement)) {
 					continue;
 				}
 
