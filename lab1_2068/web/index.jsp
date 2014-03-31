@@ -40,6 +40,16 @@
         </select>
     </div>
 </form>
-<div id="result-wrapper"></div>
+<div id="result-wrapper">
+    <table>
+        <thead>
+            <th>x</th>
+            <th>y</th>
+            <th>z</th>
+            <th>result</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 </body>
 </html>

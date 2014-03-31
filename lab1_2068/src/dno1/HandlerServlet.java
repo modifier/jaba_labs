@@ -41,6 +41,9 @@ public class HandlerServlet extends HttpServlet
 			return;
 		}
 
+		request.setAttribute("x", PositionX);
+		request.setAttribute("y", PositionY);
+		request.setAttribute("r", Radius);
 		request.setAttribute("result", Boolean.toString(checkPoint(x, y, r)));
 		request.setAttribute("action", Action);
 		request.getRequestDispatcher("/handle.jsp").forward(request, response);

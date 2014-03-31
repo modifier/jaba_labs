@@ -168,6 +168,14 @@ var $ = (function () {
 			return this;
 		},
 
+		prepend: function ($element) {
+			var $firstChild = this.items[0].firstChild;
+			for (var i = 0, l = $element.length; i < l; i++) {
+				this.items[0].insertBefore($element.get(i), $firstChild);
+			}
+			return this;
+		},
+
 		append: function ($element) {
 			for (var i = 0, l = $element.length; i < l; i++) {
 				this.items[0].appendChild($element.get(i));
@@ -325,6 +333,8 @@ var $ = (function () {
 
 		serialize: function () {
 			var $inputs = this.find('input');
+			var $selects = this.find('select');
+			$inputs.add($selects.get(0));
 			var result = {};
 			for (var i = 0; i < $inputs.items.length; i++) {
 				var $item = eaQuery($inputs.items[i]);

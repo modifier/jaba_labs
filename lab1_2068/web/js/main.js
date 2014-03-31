@@ -1,3 +1,32 @@
+var initializeTabulate = function () {
+	window.tabulate = (function ($wrapper) {
+		var $tbody = $wrapper.find('tbody');
+
+		return function (x, y, r, result) {
+			$wrapper.show();
+
+			var $row = document.createElement('tr');
+			var $x = document.createElement('td');
+				$x.innerText = x;
+				$row.appendChild($x);
+
+			var $y = document.createElement('td');
+				$y.innerText = y;
+				$row.appendChild($y);
+
+			var $r = document.createElement('td');
+				$r.innerText = r;
+				$row.appendChild($r);
+
+			var $result = document.createElement('td');
+				$result.innerText = result;
+				$row.appendChild($result);
+
+			$tbody.prepend($($row));
+		}
+	})($('#result-wrapper'));
+};
+
 var execute = function ($form, $log, $result) {
 	var problems = new ProblemLine($log);
 
@@ -55,22 +84,18 @@ var execute = function ($form, $log, $result) {
 			return;
 		}
 
-		var promise = $.ajax({
+		var data = $form.serialize();
+		data['position_x'] = evt.target.value;
+
+		var promise = $.jsonp({
 			url: url,
-			data: $form.serialize(),
-			type: 'GET'
-		}).done(function (response) {
-			$result.html(response);
-		}).fail(function (response) {
-			var status = Math.floor(response.status / 100);
-			var text = status == 5 ?
-				'There are some problems processing request on the server. Please try later.' :
-				'Some shit happened. Probably our developer was drunk and has broken client-side entirely. Please try later.';
-			$result.empty().text(text)
-		});
+			data: data,
+			action: 'tabulate'
+		})
 	});
 };
 
 $(document).ready(function () {
 	execute($('#duck_form'), $('#errors'), $('#result-wrapper'));
+	initializeTabulate();
 });

@@ -64,6 +64,7 @@ form ul li input[type="submit"] {
 
 #result-wrapper {
     margin: 10px;
+    display: none;
 }
 
 .result-table td {
