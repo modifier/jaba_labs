@@ -1,13 +1,3 @@
-var convertPoint = function (evt) {
-	var offsets = [evt.offsetX, evt.offsetY];
-	var center = 250;
-	var radius = 200;
-	return [
-		(offsets[0] - center) / radius,
-		-(offsets[1] - center) / radius
-	];
-}
-
 var initializeTabulate = function () {
 	window.tabulate = (function ($wrapper) {
 		var $tbody = $wrapper.find('tbody');
@@ -17,19 +7,19 @@ var initializeTabulate = function () {
 
 			var $row = document.createElement('tr');
 			var $x = document.createElement('td');
-				$x.innerText = x;
+				$x.textContent = x;
 				$row.appendChild($x);
 
 			var $y = document.createElement('td');
-				$y.innerText = y;
+				$y.textContent = y;
 				$row.appendChild($y);
 
 			var $r = document.createElement('td');
-				$r.innerText = r;
+				$r.textContent = r;
 				$row.appendChild($r);
 
 			var $result = document.createElement('td');
-				$result.innerText = result;
+				$result.textContent = result;
 				$row.appendChild($result);
 
 			$tbody.prepend($($row));
@@ -40,34 +30,40 @@ var initializeTabulate = function () {
 var execute = function ($form, $log, $svg) {
 	var problems = new ProblemLine($log);
 
-	var url = $form.attr('action');
-
-	var $xValidation = $form.find('#position_y');
-
-	var YValidator = new TextValidator({
-		$field: $xValidation,
-		min: -5,
-		max: 3,
-		message: {
-			NotANumber: 'It\'s not a number!',
-			ExceedsLimit: 'Y position is above acceptable bounds (3)',
-			SubseedsLimit: 'Y position is below acceptable bounds (-5)'
-		},
-		onValid: function () {
-			problems.removeMessage('position_y');
-			problems.removeMessage('radius');
-		}
-	}).enable();
-
 	var $submits = $('#position_x').find('input');
 
+	function convertPoint (evt) {
+		var svg = $svg.get(0);
+		var ctm = svg.getScreenCTM();
+
+		var point = svg.createSVGPoint();
+		point.x = evt.clientX;
+		point.y = evt.clientY;
+
+		var result = point.matrixTransform(ctm.inverse());
+
+		var offsets = [result.x, result.y];
+
+		var center = 250;
+		var radius = 200;
+		return [
+			(offsets[0] - center) / radius,
+			-(offsets[1] - center) / radius
+		];
+	}
+
+	var $yValidation = $form.find('#position_y');
+
 	function checkValidation () {
-		var isValid = YValidator.validate() == YValidator.status.EverythingOK;
+		var val = $yValidation.val();
+		var isValid = !isNaN(val) && val < 3 && val > -5;
 
 		$submits.prop('disabled', !isValid);
 	}
 
-	$xValidation.on('change', checkValidation);
+	$yValidation.on('keyup', checkValidation);
+
+	var url = $form.attr('action');
 
 	$svg.on('click', function (evt) {
 		var offsets = convertPoint(evt);
@@ -100,16 +96,8 @@ var execute = function ($form, $log, $svg) {
 		$checkbox.prop('checked', !isChecked);
 	});
 
-	$form.find('input[type=submit]').on('click', function (evt) {
-		var validY = YValidator.validate();
-
+	$submits.on('click', function (evt) {
 		evt.preventDefault();
-
-		if (validY != YValidator.status.EverythingOK) {
-			problems.addMessage('position_y', YValidator.getMessage());
-			problems.addMessage('radius', 'Resolve problems above first.');
-			return;
-		}
 
 		var data = $form.serialize();
 		data['position_x'] = evt.target.value;
