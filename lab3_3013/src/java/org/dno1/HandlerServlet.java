@@ -1,4 +1,4 @@
-package dno1;
+package org.dno1;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

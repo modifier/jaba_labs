@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>HandlerServlet</servlet-name>
-        <servlet-class>dno1.HandlerServlet</servlet-class>
+        <servlet-class>org.dno1.HandlerServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
