@@ -49,19 +49,19 @@ public class HandlerServlet extends HttpServlet
 
 	private boolean checkPoint(float x, float y, float r)
 	{
-		if (x >= 0 && y >= 0)
+		if (x >= 0 && y > 0)
 		{
-			return x*x + y*y <= r*r;
+			return y + 2 * x < r;
 		}
 
 		if (x < 0 && y >= 0)
 		{
-			return x > -r / 2 && y < r;
+			return x > -r && y < r / 2;
 		}
 
-		if (x < 0 && y < 0)
+		if (x >= 0 && y <= 0)
 		{
-			return - y / 2 - x < r / 2;
+			return x*x + y*y <= r*r;
 		}
 
 		return false;

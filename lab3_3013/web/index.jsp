@@ -19,9 +19,9 @@
 </header>
 <div id="errors"></div>
 <svg width="500" height="500" id="svg_map">
-    <rect width="100" height="200" x="150" y="50" style="fill:#3399FF" />
-    <polygon points="250,250 250,450 150,250" style="fill:#3399FF" />
-    <path d="M250,50 A 200,200 0 0,1 450,250 L 250,250" style="fill:#3399FF"></path>
+    <rect width="200" height="100" x="50" y="150" style="fill:#3399FF" />
+    <polygon points="250,250 250,50 350,250" style="fill:#3399FF" />
+    <path d="M450,250 A 200,200 0 0,1 250,450 L 250,250" style="fill:#3399FF"></path>
     <line x1="250" y1="0" x2="250" y2="500" stroke="black" stroke-width="2" />
     <line x1="0" y1="250" x2="500" y2="250" stroke="black" stroke-width="2" />
 </svg>
