@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Lab # 2 Programming Web Applications</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link href="css/style.css" rel="stylesheet" />
+    </h:head>
+    <h:body>
+        <header>
+            <h1>Лабораторная работа № 3 по программированию интернет-приложений</h1>
+            <div class="author">Амирасланов Евгений Шакирович, Кулатова Наталья Александровна, группа 4125, вариант 3013</div>
+        </header>
+        <div id="errors"></div>
+        <svg width="500" height="500" id="svg_map">
+            <rect width="200" height="100" x="50" y="150" style="fill:#3399FF" />
+            <polygon points="250,250 250,50 350,250" style="fill:#3399FF" />
+            <path d="M450,250 A 200,200 0 0,1 250,450 L 250,250" style="fill:#3399FF"></path>
+            <line x1="250" y1="0" x2="250" y2="500" stroke="black" stroke-width="2" />
+            <line x1="0" y1="250" x2="500" y2="250" stroke="black" stroke-width="2" />
+            <c:forEach items="#{handler.log}" var="item">
+                <circle cx="#{item.convertedX}" cy="#{item.convertedY}" r="5" fill='#{item.result ? "red" : "blue"}' />
+            </c:forEach>
+        </svg>
+        <h:form id="duck_form">
+            <div class="form-line position_x">
+                <div class="label">X position:</div>
+                <ul class="value" id="position_x">
+                    <li><h:commandButton value="-2" actionListener="#{handler.setCurrentX}" /></li>
+                    <li><h:commandButton value="-1.5" actionListener="#{handler.setCurrentX}" /></li>
+                    <li><h:commandButton value="-1" actionListener="#{handler.setCurrentX}" /></li>
+                    <li><h:commandButton value="-0.5" actionListener="#{handler.setCurrentX}" /></li>
+                    <li><h:commandButton value="0" actionListener="#{handler.setCurrentX}" /></li>
+                    <li><h:commandButton value="0.5" actionListener="#{handler.setCurrentX}" /></li>
+                    <li><h:commandButton value="1" actionListener="#{handler.setCurrentX}" /></li>
+                    <li><h:commandButton value="1.5" actionListener="#{handler.setCurrentX}" /></li>
+                    <li><h:commandButton value="2" actionListener="#{handler.setCurrentX}" /></li>
+                </ul>
+            </div>
+            <div class="form-line position_y">
+                <div class="label"><label for="position_y">Y position:</label></div>
+                <div class="value"><h:inputText value="#{handler.currentY}" id="position_y">
+                    <f:validateDoubleRange minimum="-3" maximum="5" />
+                </h:inputText></div>
+            </div>
+            <div class="form-line radius">
+                <div class="label">Radius: </div>
+                <ul class="value" id="radius">
+                    <h:selectManyCheckbox value="#{handler.currentRadius}">
+   			<f:selectItem itemValue="1" itemLabel="1" />
+   			<f:selectItem itemValue="2" itemLabel="2" />
+   			<f:selectItem itemValue="3" itemLabel="3" />
+   			<f:selectItem itemValue="4" itemLabel="4" />
+   			<f:selectItem itemValue="5" itemLabel="5" />
+                    </h:selectManyCheckbox>
+                </ul>
+            </div>
+        </h:form>
+        <c:if test="#{handler.log.size()>0}">
+            <div id="result-wrapper">
+                <table class="result-table">
+                    <thead>
+                        <th>x</th>
+                        <th>y</th>
+                        <th>radius</th>
+                        <th>result</th>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="#{handler.log}" var="record">
+                        <tr>
+                            <td>#{record.x}</td>
+                            <td>#{record.y}</td>
+                            <td>#{record.radius}</td>
+                            <td>#{record.result}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </c:if>
+    </h:body>
+</html>
+
