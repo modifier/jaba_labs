@@ -11,6 +11,11 @@ import javax.faces.event.ActionEvent;
 public class AreaChecker {    
     private ArrayList<PointResult> results = new ArrayList<PointResult>();
     
+    public ArrayList<PointResult> getResults()
+    {
+        return results;
+    }
+    
     @ManagedProperty(value="#{x}")
     private double x = 0;
     
@@ -61,6 +66,18 @@ public class AreaChecker {
     
     private boolean checkPoint(double x, double y, double r)
     {
-        return true;
+        if (x >= 0 && y >= 0) {
+            return x * x + y * y < r * r;
+        }
+        
+        if (x > 0 && y < 0) {
+            return x < r && y > -r;
+        }
+        
+        if (x < 0 && y > 0) {
+            return 2 * y - x < r;
+        }
+        
+        return false;
     }
 }

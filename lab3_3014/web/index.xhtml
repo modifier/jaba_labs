@@ -2,56 +2,90 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Лабораторная работа по программированию интернет-приложения</title>
-        <script src="/script.js"></script>
-        <link href="/style.css" rel="stylesheet" />
+        <link href="style.css" rel="stylesheet" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     </h:head>
     <h:body>
-        <div class="header">Работу выполнили: <br/>Захарова Ася Александровна<br/>Сиразетдинова Гульнара Ринатовна<br/><br/>Группа 4125, вариант 450</div>
-        <h:form>
-            <table>
-                <tr>
-                    <td>X:</td>
-                    <td>
-                        <h:selectOneMenu value="#{checker.x}">
-                            <f:selectItem itemValue="-4" />
-                            <f:selectItem itemValue="-3" />
-                            <f:selectItem itemValue="-2" />
-                            <f:selectItem itemValue="-1" />
-                            <f:selectItem itemValue="0" />
-                            <f:selectItem itemValue="1" />
-                            <f:selectItem itemValue="2" />
-                            <f:selectItem itemValue="3" />
-                            <f:selectItem itemValue="4" />
-                        </h:selectOneMenu>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Y:</td>
-                    <td>
-                        <h:inputText value="#{checker.y}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Radius:</td>
-                    <td>
-                        <h:selectOneRadio value="#{checker.r}">
-                            <f:selectItem itemValue="1" itemLabel="1" />
-                            <f:selectItem itemValue="1.5" itemLabel="1.5" />
-                            <f:selectItem itemValue="2" itemLabel="2" />
-                            <f:selectItem itemValue="2.5" itemLabel="2.5" />
-                            <f:selectItem itemValue="3" itemLabel="3" />
-                        </h:selectOneRadio>
-                    </td>
-                </tr>
-                <tr><td colspan="2">
-                    <h:commandButton value="Go" actionListener="#{checker.handle}" />
-                </td></tr>
+        <div class="header">Работу выполнили: Захарова Ася Александровна, Сиразетдинова Гульнара Ринатовна<br/>Группа 4125, вариант # 3014</div>
+        <div class="container">
+            <h:form class="forma">
+                <table>
+                    <tr>
+                        <th>Координаты абсциссы:</th>
+                        <td>
+                            <h:selectOneMenu value="#{checker.x}" class="input">
+                                <f:selectItem itemValue="-4" />
+                                <f:selectItem itemValue="-3" />
+                                <f:selectItem itemValue="-2" />
+                                <f:selectItem itemValue="-1" />
+                                <f:selectItem itemValue="0" />
+                                <f:selectItem itemValue="1" />
+                                <f:selectItem itemValue="2" />
+                                <f:selectItem itemValue="3" />
+                                <f:selectItem itemValue="4" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Координаты ординаты:</th>
+                        <td>
+                            <h:inputText value="#{checker.y}" class="input">
+                                <f:validateDoubleRange minimum="-5" maximum="5" />
+                            </h:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Значение R:</th>
+                        <td class="radio">
+                            <h:selectOneRadio value="#{checker.r}">
+                                <f:selectItem itemValue="1" itemLabel="1.0" />
+                                <f:selectItem itemValue="1.5" itemLabel="1.5" />
+                                <f:selectItem itemValue="2" itemLabel="2.0" />
+                                <f:selectItem itemValue="2.5" itemLabel="2.5" />
+                                <f:selectItem itemValue="3" itemLabel="3.0" />
+                            </h:selectOneRadio>
+                        </td>
+                    </tr>
+                    <tr><td colspan="2">
+                        <h:commandButton value="Проверить" actionListener="#{checker.handle}" class="button" />
+                    </td></tr>
+                </table>
+            </h:form>
+            <div class="image">
+                <img src="bg.png" width="202" height="202" />
+                <c:forEach items="#{checker.results}" var="item">
+                    <div class='point #{item.result ? "hit" : ""}' style="left: #{item.left}px; top: #{item.top}px"></div>
+                </c:forEach>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <c:if test="#{checker.results.size()>0}">
+            <h3>Таблица результатов</h3>
+            <table  width="490px" valign="top" bgcolor="#D3D3D3" border="1px" class="table1">
+                <thead>
+                    <tr>
+                        <td width="30px"> X </td>
+                        <td width="30px"> Y </td>
+                        <td width="30px"> R </td>
+                        <td width="60px"> Результат </td>
+                     </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="#{checker.results}" var="item">
+                        <tr>
+                            <td>#{item.x}</td>
+                            <td>#{item.y}</td>
+                            <td>#{item.r}</td>
+                            <td>#{item.result ? "Входит" : "Не входит"}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
-        </h:form>
+        </c:if>
     </h:body>
 </html>
 
