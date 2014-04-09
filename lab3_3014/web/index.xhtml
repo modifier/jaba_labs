@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Лабораторная работа по программированию интернет-приложения</title>
+        <script src="/script.js"></script>
+        <link href="/style.css" rel="stylesheet" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    </h:head>
+    <h:body>
+        <div class="header">Работу выполнили: <br/>Захарова Ася Александровна<br/>Сиразетдинова Гульнара Ринатовна<br/><br/>Группа 4125, вариант 450</div>
+        <h:form>
+            <table>
+                <tr>
+                    <td>X:</td>
+                    <td>
+                        <h:selectOneMenu value="#{checker.x}">
+                            <f:selectItem itemValue="-4" />
+                            <f:selectItem itemValue="-3" />
+                            <f:selectItem itemValue="-2" />
+                            <f:selectItem itemValue="-1" />
+                            <f:selectItem itemValue="0" />
+                            <f:selectItem itemValue="1" />
+                            <f:selectItem itemValue="2" />
+                            <f:selectItem itemValue="3" />
+                            <f:selectItem itemValue="4" />
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Y:</td>
+                    <td>
+                        <h:inputText value="#{checker.y}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Radius:</td>
+                    <td>
+                        <h:selectOneRadio value="#{checker.r}">
+                            <f:selectItem itemValue="1" itemLabel="1" />
+                            <f:selectItem itemValue="1.5" itemLabel="1.5" />
+                            <f:selectItem itemValue="2" itemLabel="2" />
+                            <f:selectItem itemValue="2.5" itemLabel="2.5" />
+                            <f:selectItem itemValue="3" itemLabel="3" />
+                        </h:selectOneRadio>
+                    </td>
+                </tr>
+                <tr><td colspan="2">
+                    <h:commandButton value="Go" actionListener="#{checker.handle}" />
+                </td></tr>
+            </table>
+        </h:form>
+    </h:body>
+</html>
+
